@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:MauiApp4.ViewModels;assembly=MauiApp4"
+             xmlns:local="clr-namespace:MauiApp4;assembly=MauiApp4"
+             x:Class="MauiApp4.MainPage" Background="black" BindingContext="{x:Static viewModels:WordlyViewModel.Instance}">
+    <ContentPage.Resources>
+        <Style TargetType="Label">
+            <Setter Property="Background" Value="white"/>
+            <Setter Property="VerticalTextAlignment" Value="Center"/>
+            <Setter Property="HorizontalTextAlignment" Value="Center"/>
+            <Setter Property="FontAutoScalingEnabled" Value="True"/>
+            <Setter Property="FontSize" Value="Title"/>
+        </Style>
+    </ContentPage.Resources>
+    <Grid Background="Black" RowDefinitions=".75*,.3*">
+        <StackLayout VerticalOptions="FillAndExpand" Grid.Row="0" BindableLayout.ItemsSource="{Binding GuessTries}">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout BindableLayout.ItemsSource="{Binding TryLetters}" 
+                                 Orientation="Horizontal" 
+                                 VerticalOptions="FillAndExpand" 
+                                 HorizontalOptions="FillAndExpand"
+                                 IsClippedToBounds="True"
+                                 BackgroundColor="White">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Frame Padding="1" Margin="3" BorderColor="DarkBlue" CornerRadius="0" HorizontalOptions="FillAndExpand">
+                                    <Label HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Background="{Binding InPlaceColor}" Text="{Binding Letter}" />
+                                </Frame>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+        </StackLayout>
+        <local:KeyboardContentVIew Grid.Row="1" BackgroundColor="white">
+        </local:KeyboardContentVIew>
+    </Grid>
+</ContentPage>
