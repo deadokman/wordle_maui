@@ -15,7 +15,6 @@ namespace MauiApp4.ViewModels
         public TryLetterItem()
         {
             InPlaceColor = Colors.White;
-            Letter = "+";
         }
 
         /// <summary>
