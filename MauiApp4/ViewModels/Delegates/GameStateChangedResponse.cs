@@ -10,8 +10,6 @@ namespace MauiApp4.ViewModels.Delegates
     {
         public int WordLength { get; internal set; }
 
-        public bool GameFinished { get; set; }
-
         public bool NextTry { get; internal set; }
 
         public bool[] LetterInPlace { get; internal set; }

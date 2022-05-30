@@ -1,4 +1,6 @@
-﻿using MauiApp4.ViewModels.Delegates;
+﻿using MauiApp4.Bll;
+using MauiApp4.Bll.iface;
+using MauiApp4.ViewModels.Delegates;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,19 +12,15 @@ namespace MauiApp4.ViewModels
 {
     public sealed class WordlyViewModel : INotifyPropertyChanged
     {
-        private const int TryCnt = 6;
-        private const int WordLength = 5;
+        // private const int TryCnt = 6;
+        // private const int WordLength = 5;
         private GuessTryItem[] _guessTries;
         private static WordlyViewModel _instance;
 
-        private string _currentWord;
-
-        private string[] _currentWordBuffer = new string[WordLength];
+        private string[] _currentWordBuffer;
         private int _currentWordCharIdx = 0;
-        private int _currentTryCnt = 0;
 
-        private object _lock;
-
+        private IGameLogic _gameLogic;
         public static WordlyViewModel Instance
         {
             get
@@ -33,22 +31,23 @@ namespace MauiApp4.ViewModels
 
         private WordlyViewModel()
         {
-            var tryies = new GuessTryItem[TryCnt];
-            for (var i = 0; i < TryCnt; i++)
+            _gameLogic = new GameLogic(6);
+            _gameLogic.SetNewWord("норка");
+
+            var tryies = new GuessTryItem[_gameLogic.TryCount];
+            for (var i = 0; i < _gameLogic.TryCount; i++)
             {
-                tryies[i] = new GuessTryItem(WordLength)
+                tryies[i] = new GuessTryItem(_gameLogic.WordLength)
                 {
                 };
             }
 
             GuessTries = tryies;
-            _lock = new object();
 
             // Подписаться на события клавиатуры
             KeyboardViewModel.Instance.KeyboardButtonStateChanging += OnKeyboardButtonStateChanging;
             KeyboardViewModel.Instance.ControlButtonClicked += OnControlButtonClicked;
-
-            _currentWord = "норка";
+            _currentWordBuffer = new string[_gameLogic.WordLength];
         }
 
         public GuessTryItem[] GuessTries
@@ -65,7 +64,7 @@ namespace MauiApp4.ViewModels
         {
             get
             {
-                return _guessTries[_currentTryCnt];
+                return _guessTries[_gameLogic.CurrentTryIdx - 1];
             }
         }
 
@@ -73,9 +72,9 @@ namespace MauiApp4.ViewModels
 
         private bool OnKeyboardButtonStateChanging(KeyboardButton sender)
         {
-            if (_currentWordCharIdx < WordLength)
+            if (_currentWordCharIdx < _gameLogic.WordLength)
             {
-                GuessTries[_currentTryCnt].TryLetters[_currentWordCharIdx].Letter = sender.Letter;
+                GuessTries[_gameLogic.CurrentTryIdx].TryLetters[_currentWordCharIdx].Letter = sender.Letter;
                 _currentWordBuffer[_currentWordCharIdx] = sender.Letter;
                 _currentWordCharIdx++;
                 return true;
@@ -88,58 +87,53 @@ namespace MauiApp4.ViewModels
 
         private GameStateChangedResponse OnControlButtonClicked(bool isBackspace)
         {
+            var resp = new GameStateChangedResponse();
+            resp.WordLength = _gameLogic.WordLength;
+
             if (_currentWordCharIdx > 0 && isBackspace)
             {
                 _currentWordCharIdx--;
                 CurrentTryItem.TryLetters[_currentWordCharIdx].Letter = String.Empty;
                 _currentWordBuffer[_currentWordCharIdx] = null;
 
-                return new GameStateChangedResponse() { GameFinished = false };
+                return resp;
             }
-            else if (!isBackspace && _currentTryCnt < TryCnt && _currentWordCharIdx == WordLength)
+            else if (!isBackspace)
             {
-                var resp = new GameStateChangedResponse() 
-                { 
-                    GameFinished = false, 
-                    NextTry = true, 
-                    WordLength = WordLength,
-                };
+                var validation = _gameLogic.ValidateWord(_currentWordBuffer.Aggregate((c1, c2) => c1 + c2));
 
-                InvokeWordValidate(resp);
+                // Сбросить 
+                resp.NextTry = !validation.GameFinished;
+                resp.LetterInPlace = validation.CharInPlace;
+                resp.WordHasLetter = validation.CharExists;
+
+                ColorizeChars(resp);
                 return resp;
             } 
             else
             {
-                return new GameStateChangedResponse() { GameFinished = false };
+                return resp;
             }
         }
 
-        private void InvokeWordValidate(GameStateChangedResponse respToFill)
+        private void ColorizeChars(GameStateChangedResponse resp)
         {
-            respToFill.LetterInPlace = new bool[WordLength];
-            respToFill.WordHasLetter = new bool[WordLength];
-
-            for (var i = 0; i < WordLength; i++)
+            for (int i = 0; i < resp.WordLength; i++)
             {
-                var letter = _currentWordBuffer[i];
-                var inPlace = _currentWord[i] == letter[0];
-                var hasLetter = _currentWord.Contains(letter);
-                respToFill.WordHasLetter[i] = hasLetter;
-                respToFill.LetterInPlace[i] = inPlace;
-
-                if (inPlace)
+                if (resp.LetterInPlace[i])
                 {
                     CurrentTryItem.TryLetters[i].InPlaceColor = Colors.Green;
                 } 
-                else if (hasLetter)
+                else if (resp.WordHasLetter[i])
                 {
                     CurrentTryItem.TryLetters[i].InPlaceColor = Colors.DarkGoldenrod;
-                } 
+                }
                 else
                 {
                     CurrentTryItem.TryLetters[i].InPlaceColor = Colors.Gray;
                 }
             }
         }
+ 
     }
 }
