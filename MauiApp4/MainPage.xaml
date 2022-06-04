@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:MauiApp4.ViewModels;assembly=MauiApp4"
              xmlns:local="clr-namespace:MauiApp4;assembly=MauiApp4"
-             x:Class="MauiApp4.MainPage" Background="black" BindingContext="{x:Static viewModels:WordlyViewModel.Instance}">
+             x:Class="MauiApp4.MainPage" Background="black" BindingContext="{Binding Source={x:Static local:ViewModelLocator.Instance}, Path=WordlyViewModel}">
     <ContentPage.Resources>
         <Style TargetType="Label">
             <Setter Property="Background" Value="white"/>

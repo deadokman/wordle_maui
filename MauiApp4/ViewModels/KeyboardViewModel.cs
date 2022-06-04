@@ -1,4 +1,5 @@
 ﻿using MauiApp4.ViewModels.Delegates;
+using MauiApp4.ViewModels.interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MauiApp4.ViewModels
 {
-    public class KeyboardViewModel
+    public class KeyboardViewModel : IKeyboardEventEmitter
     {
         public KeyboardButton[][] Buttons { get; set; }
 
@@ -25,14 +26,7 @@ namespace MauiApp4.ViewModels
         private Dictionary<string, KeyboardButton> _textButtonsData;
         private Stack<KeyboardButton> _currentButtonStack = new Stack<KeyboardButton>();
 
-        private static KeyboardViewModel _instance;
-
-        public static KeyboardViewModel Instance
-        {
-            get => _instance ?? (_instance = new KeyboardViewModel());
-        }
-
-        private KeyboardViewModel()
+        public KeyboardViewModel()
         {
             _textButtonsData = new Dictionary<string, KeyboardButton>();
 
@@ -94,7 +88,6 @@ namespace MauiApp4.ViewModels
             if (KeyboardButtonStateChanging?.Invoke(senders) ?? false)
             {
                 _currentButtonStack.Push(senders);
-                senders.Color = Colors.BlueViolet;
             }
         }
 

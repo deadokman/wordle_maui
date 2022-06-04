@@ -1,4 +1,7 @@
-﻿using MauiApp4.ViewModels;
+﻿using MauiApp4.Bll;
+using MauiApp4.Bll.iface;
+using MauiApp4.ViewModels;
+using MauiApp4.ViewModels.interfaces;
 
 namespace MauiApp4;
 
@@ -16,10 +19,15 @@ public static class MauiProgram
 			});
 
         builder.Services
+				.AddSingleton<MainPage>()
                 .AddSingleton<WordlyViewModel>()
-				.AddSingleton<KeyboardViewModel>();
+				.AddSingleton<IKeyboardEventEmitter>(sp => sp.GetService<KeyboardViewModel>())
+                .AddSingleton<KeyboardViewModel>()
+                .AddSingleton<IGameLogic, GameLogic>();
 
-		return builder.Build();
+		var serviceProvider = builder.Build();
+		ViewModelLocator.Instance.SetApp(serviceProvider);
+        return serviceProvider;
 
     }
 

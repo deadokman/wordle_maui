@@ -2,7 +2,8 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:MauiApp4.ViewModels;assembly=MauiApp4"
-             x:Class="MauiApp4.KeyboardContentVIew" BindingContext="{x:Static viewModels:KeyboardViewModel.Instance}">
+             xmlns:local="clr-namespace:MauiApp4"
+             x:Class="MauiApp4.KeyboardContentVIew" BindingContext="{Binding Source={x:Static local:ViewModelLocator.Instance}, Path=KeyboardViewModel}">
     <ContentView.Resources>
         <ResourceDictionary>
             <Style TargetType="Button">

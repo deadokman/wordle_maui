@@ -15,5 +15,6 @@ namespace MauiApp4.Contracts
         public bool[] CharExists { get; internal set; }
         public bool Validated { get; internal set; }
         public bool GameFinished { get; internal set; }
+        public bool WordAccepted { get; internal set; }
     }
 }

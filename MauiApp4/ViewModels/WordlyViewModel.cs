@@ -1,6 +1,7 @@
 ﻿using MauiApp4.Bll;
 using MauiApp4.Bll.iface;
 using MauiApp4.ViewModels.Delegates;
+using MauiApp4.ViewModels.interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,17 +22,13 @@ namespace MauiApp4.ViewModels
         private int _currentWordCharIdx = 0;
 
         private IGameLogic _gameLogic;
-        public static WordlyViewModel Instance
-        {
-            get
-            {
-                return _instance ?? (_instance = new WordlyViewModel());
-            }
-        }
+        private readonly IKeyboardEventEmitter _keyboardViewModel;
 
-        private WordlyViewModel()
+        public WordlyViewModel(IGameLogic gameLogic, IKeyboardEventEmitter keyboardViewModel)
         {
-            _gameLogic = new GameLogic(6);
+            _gameLogic = gameLogic ?? throw new ArgumentNullException(nameof(gameLogic));
+            _keyboardViewModel = keyboardViewModel ?? throw new ArgumentNullException(nameof(keyboardViewModel));
+
             _gameLogic.SetNewWord("норка");
 
             var tryies = new GuessTryItem[_gameLogic.TryCount];
@@ -45,8 +42,8 @@ namespace MauiApp4.ViewModels
             GuessTries = tryies;
 
             // Подписаться на события клавиатуры
-            KeyboardViewModel.Instance.KeyboardButtonStateChanging += OnKeyboardButtonStateChanging;
-            KeyboardViewModel.Instance.ControlButtonClicked += OnControlButtonClicked;
+            _keyboardViewModel.KeyboardButtonStateChanging += OnKeyboardButtonStateChanging;
+            _keyboardViewModel.ControlButtonClicked += OnControlButtonClicked;
             _currentWordBuffer = new string[_gameLogic.WordLength];
         }
 
@@ -106,6 +103,12 @@ namespace MauiApp4.ViewModels
                 resp.NextTry = !validation.GameFinished;
                 resp.LetterInPlace = validation.CharInPlace;
                 resp.WordHasLetter = validation.CharExists;
+
+                if (!validation.GameFinished && validation.WordAccepted)
+                {
+                    _currentWordBuffer = new string[_gameLogic.WordLength];
+                    _currentWordCharIdx = 0;
+                }
 
                 ColorizeChars(resp);
                 return resp;

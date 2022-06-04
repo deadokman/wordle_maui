@@ -17,18 +17,10 @@ namespace MauiApp4.Bll
 
         private int _currentTryCnt = 0;
 
-        public GameLogic(string word, int tryCount, int wordLength)
-            : this(tryCount)
+        public GameLogic()
         {
-            WordLength = wordLength;
-            _currentWord = word ?? throw new ArgumentNullException(nameof(word));
         }
-
-        public GameLogic(int tryCount)
-        {
-            TryCount = tryCount;
-        }
-
+        
         /// <summary>
         /// Tries count
         /// </summary>
@@ -71,15 +63,17 @@ namespace MauiApp4.Bll
                 _currentTryCnt++;
                 result.Validated = true;
                 result.GameFinished = _currentTryCnt == TryCount;
+                result.WordAccepted = true;
                 return result;
             }
 
             return result;
         }
 
-        public void SetNewWord(string word)
+        public void SetNewWord(string word, int tryCnt = 6)
         {
             _currentWord = word;
+            TryCount = tryCnt;
             _currentTryCnt = 0;
             WordLength = word.Length;
         }
