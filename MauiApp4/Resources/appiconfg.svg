@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="456" height="456" viewBox="0 0 456 456" version="1.1" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <linearGradient id="gradient-1" bx:pinned="true"/>
+    <linearGradient id="gradient-2" bx:pinned="true"/>
+    <style bx:fonts="Bayon">@import url(https://fonts.googleapis.com/css2?family=Bayon%3Aital%2Cwght%400%2C400&amp;display=swap);</style>
+    <style bx:fonts="Audiowide">@import url(https://fonts.googleapis.com/css2?family=Audiowide%3Aital%2Cwght%400%2C400&amp;display=swap);</style>
+    <linearGradient gradientUnits="userSpaceOnUse" x1="227.718" y1="1.78" x2="227.718" y2="456.168" id="gradient-0" gradientTransform="matrix(0.817897, 0.575369, -0.455568, 0.601782, 152.950821, -54.666824)">
+      <stop offset="0" style="stop-color: rgba(170, 96, 235, 1)"/>
+      <stop offset="1" style="stop-color: rgb(62, 85, 131);"/>
+    </linearGradient>
+    <linearGradient gradientUnits="userSpaceOnUse" x1="66.336" y1="-27.575" x2="66.336" y2="8.06" id="gradient-3">
+      <stop offset="0" style="stop-color: rgba(62, 0, 93, 1)"/>
+      <stop offset="1" style="stop-color: rgba(0, 0, 0, 1)"/>
+    </linearGradient>
+    <bx:grid x="0" y="0" width="45.249" height="45.249"/>
+  </defs>
+  <g>
+    <title>MAIN</title>
+    <path d="M 105.5 281.609 C 102.797 281.609 100.499 280.708 98.607 278.907 C 96.715 277.059 95.769 274.865 95.769 272.324 C 95.769 269.737 96.715 267.521 98.607 265.673 C 100.499 263.825 102.797 262.901 105.5 262.901 C 108.249 262.901 110.568 263.825 112.461 265.673 C 114.398 267.521 115.366 269.737 115.366 272.324 C 115.366 274.865 114.398 277.059 112.461 278.907 C 110.568 280.708 108.249 281.609 105.5 281.609 Z" style="fill:#ffffff;fill-rule:nonzero;stroke-width:0.838376"/>
+    <path d="M 213.561 280.084 L 195.99 280.084 L 149.7 207.054 C 148.528 205.207 147.559 203.289 146.794 201.303 L 146.388 201.303 C 146.748 203.428 146.929 207.978 146.929 214.953 L 146.929 280.084 L 131.385 280.084 L 131.385 180.724 L 150.104 180.724 L 194.842 252.022 C 196.734 254.979 197.951 257.012 198.491 258.12 L 198.761 258.12 C 198.311 255.487 198.086 251.03 198.086 244.747 L 198.086 180.724 L 213.561 180.724 L 213.561 280.084 Z" style="fill:#ffffff;fill-rule:nonzero;stroke-width:0.838376"/>
+    <path d="M 289.251 280.084 L 234.851 280.084 L 234.851 180.724 L 287.089 180.724 L 287.089 194.721 L 250.935 194.721 L 250.935 222.852 L 284.251 222.852 L 284.251 236.779 L 250.935 236.779 L 250.935 266.157 L 289.251 266.157 L 289.251 280.084 Z" style="fill:#ffffff;fill-rule:nonzero;stroke-width:0.838376"/>
+    <path d="M 366.565 194.721 L 338.722 194.721 L 338.722 280.084 L 322.638 280.084 L 322.638 194.721 L 294.863 194.721 L 294.863 180.724 L 366.565 180.724 L 366.565 194.721 Z" style="fill:#ffffff;fill-rule:nonzero;stroke-width:0.838376"/>
+    <rect x="-0.087" y="1.78" width="455.61" height="454.388" style="stroke: rgb(0, 0, 0); fill-rule: evenodd; paint-order: fill; fill: url(#gradient-0);"/>
+    <text style="fill: rgb(255, 255, 255); font-family: Bayon; font-size: 77.0265px; font-weight: 700; white-space: pre;" transform="matrix(0.9607, 0, 0, 0.960708, 133.200699, 236.512222)">WORDLY</text>
+    <text style="fill: url(#gradient-3); font-family: Audiowide; font-size: 28px; white-space: pre;" transform="matrix(0.9607, 0, 0, 0.960708, 167.411224, 272.237976)">CRYPTO</text>
+    <rect x="131.385" y="245.444" width="205.958" height="0.961" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);"/>
+  </g>
+</svg>

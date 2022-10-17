@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:MauiApp4.ViewModels;assembly=MauiApp4"
+             xmlns:local="clr-namespace:MauiApp4"
+             x:Class="MauiApp4.KeyboardContentVIew" BindingContext="{Binding Source={x:Static local:ViewModelLocator.Instance}, Path=KeyboardViewModel}">
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Button">
+                <Setter Property="Margin" Value="1"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="VerticalOptions" Value="Fill"/>
+                <Setter Property="FontAutoScalingEnabled" Value="True"/>
+                <Setter Property="FontSize" Value="Small"/>
+                <Setter Property="Padding" Value="12,12"/>
+            </Style>
+            <Style x:Key="FlexKeyrow" TargetType="FlexLayout">
+                <Setter Property="Wrap" Value="NoWrap"/>
+                <Setter Property="Direction" Value="Row"/>
+                <Setter Property="JustifyContent" Value="Center"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentView.Resources>
+
+
+    <Grid RowDefinitions="*,*,*" HorizontalOptions="Fill">
+        <FlexLayout Style="{Binding Source={StaticResource FlexKeyrow}}" BindableLayout.ItemsSource="{Binding ButtonsFirstRow}" Grid.Row="0">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate>
+                    <Button Command="{Binding ButtonClickCmd}" Text="{Binding Letter}" BackgroundColor="{Binding Color}"/>
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+        </FlexLayout>
+        <FlexLayout Style="{Binding Source={StaticResource FlexKeyrow}}" BindableLayout.ItemsSource="{Binding ButtonsSecondRow}" Grid.Row="1">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate>
+                    <Button Command="{Binding ButtonClickCmd}" Text="{Binding Letter}" Background="{Binding Color}"/>
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+        </FlexLayout>
+        <FlexLayout Style="{Binding Source={StaticResource FlexKeyrow}}" BindableLayout.ItemsSource="{Binding ButtonsThirdRow}" Grid.Row="2">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate>
+                    <Button Command="{Binding ButtonClickCmd}" Text="{Binding Letter}" Background="{Binding Color}"/>
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+        </FlexLayout>
+    </Grid>
+</ContentView>
